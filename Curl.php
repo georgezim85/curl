@@ -166,6 +166,18 @@ class Curl
 
         return $this->exec($url, $options, $debug);
     }
+    
+    public function postJson($url, $json_encoded_data, $params = array(), $debug = false)
+    {
+        $url = $this->buildUrl($url, $params);
+
+        $options = $this->getOptions();
+        $options[CURLOPT_POST] = true;
+        $options[CURLOPT_POSTFIELDS] = $json_encoded_data;
+        $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json', 'Content-Length: ' . strlen($json_encoded_data)];
+
+        return $this->exec($url, $options, $debug);
+    }
 
     public function put($url, $data = null, $params = array(), $debug = false)
     {
